@@ -1,12 +1,12 @@
 {
   "extends": [],
-  "defaultSeverity": "warning",
-  "jsRules": {"no-empty": true},
   "linterOptions": {
-    "exclude": [
-      "config/**/*.js",
-      "node_modules/**/*.ts"
-    ]
+    "exclude": ["config/**/*.js", "node_modules/**/*.ts", "coverage/lcov-report/*.js"]
+  },
+  "rules": {
+    "semicolon": true
+  },
+  "jsRules": {
+    "no-empty": true
   }
 }
-  
