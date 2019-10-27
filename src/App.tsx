@@ -1,6 +1,5 @@
 import * as React from 'react';
 import './App.css';
-import Hello from './components/Hello';
 
 const logo = require('./logo.svg');
 
@@ -14,7 +13,6 @@ function App() {
             <p className="App-intro">
                 To get started, edit <code>src/App.tsx</code> and save to reload.
             </p>
-            <Hello name="TypeScript"/>
         </div>
     );
 }
