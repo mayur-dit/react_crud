@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {Grid, GridColumn as Column} from '@progress/kendo-react-grid';
+import {IPersonSharedData} from '../IPersonSharedData';
 
-export default class PersonList extends React.Component {
+type PushesPropsType = { data: IPersonSharedData };
+export default class PersonList extends React.Component<PushesPropsType, {}> {
     state = {
         forecasts: [],
         loading: false,
@@ -9,10 +11,13 @@ export default class PersonList extends React.Component {
 
     constructor(props: any) {
         super(props);
+        this.props.data.personListRefresh.subscribe(async () => {
+            await this.loadPersonsData();
+        });
     }
 
     async componentDidMount() {
-        await this.populateWeatherData();
+        await this.loadPersonsData();
     }
 
     static renderForecastsTable(persons: any[]) {
@@ -40,7 +45,7 @@ export default class PersonList extends React.Component {
         );
     }
 
-    async populateWeatherData() {
+    async loadPersonsData() {
         const response = await fetch('http://localhost:8888/api/person/getpersons');
         const data = await response.json();
         this.setState({forecasts: data, loading: false});

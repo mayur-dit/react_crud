@@ -1,10 +1,13 @@
 import * as React from 'react';
 import {Window} from '@progress/kendo-react-dialogs';
+import {IPersonSharedData} from '../IPersonSharedData';
 
 const txtFieldState = {value: '', valid: true, typeMismatch: false, errMsg: ''};
 const ErrorValidationLabel = ({txtLbl}: any) => (<label htmlFor="" style={{color: 'red'}}>{txtLbl}</label>);
 
-export default class PersonForm extends React.Component {
+type PushesPropsType = { data: IPersonSharedData };
+
+export default class PersonForm extends React.Component<PushesPropsType, {}> {
 
     reduceFormValues = (formElements: any) => {
         const arrElements = Array.prototype.slice.call(formElements); //we convert elements/inputs into an array found inside form element
@@ -44,31 +47,48 @@ export default class PersonForm extends React.Component {
         super(props);
         this.toggleDialog = this.toggleDialog.bind(this);
         this.submitForm = this.submitForm.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
     }
 
     toggleDialog() {
+        console.log(this.props);
         this.setState({
             visible: !this.state.visible
         });
     }
 
-    submitForm() {
+    async submitForm() {
         const form: any = document.getElementById('idForm');
 
         //we need to extract specific properties in Constraint Validation API using this code snippet
         const formValues = this.reduceFormValues(form.elements);
         const allFieldsValid = this.checkAllFieldsValid(formValues);
         //note: put ajax calls here to persist the form inputs in the database.
+        this.setState({...formValues, allFieldsValid}); //we set the state based on the extracted values from Constraint Validation API
 
         console.log(formValues);
-
-        this.setState({...formValues, allFieldsValid}); //we set the state based on the extracted values from Constraint Validation API
+        if (allFieldsValid) {
+            await this.savePerson(formValues);
+        }
     }
 
-    // handleChange = (event: any) => {
-    //     this.state.name.value = event.target.value;
-    // }
+    async savePerson(formValues: any) {
+        let res = await fetch('http://localhost:8888/api/person/addperson', {
+            method: 'POST',
+            headers: {'Accept': 'application/json', 'Content-Type': 'application/json',},
+            body: JSON.stringify({
+                'Name': formValues.name.value,
+                'Hobbies': formValues.hobbies.value,
+                'AddressId': parseInt(formValues.address.value),
+                'CreatedDate': new Date().toISOString()
+            })
+        });
+        if (res && res.statusText === 'OK') {
+            console.log('saved successfully');
+            this.toggleDialog();
+            this.props.data.personListRefresh.next(this.props.data.personListRefresh.value + 1);
+        }
+        console.log(res);
+    }
 
     render() {
 
@@ -100,8 +120,8 @@ export default class PersonForm extends React.Component {
                         <div className="form-group">
                             <label htmlFor="exampleFormControlSelect1">Address</label>
                             <select name="address" className="form-control" required>
-                                <option>USA</option>
-                                <option>India</option>
+                                <option value="1">USA</option>
+                                <option value="2">India</option>
                             </select>
                             {renderAddressValidationError}
                         </div>
