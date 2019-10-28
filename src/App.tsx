@@ -4,12 +4,14 @@ import './App.css';
 import PersonList from './components/person/list/PersonList';
 import PersonForm from './components/person/form/PersonForm';
 import {IPersonSharedData} from './components/person/interfaces/IPersonSharedData';
+import {IPerson} from './components/person/interfaces/IPerson';
 
 const logo = require('./logo.svg');
 
 function App() {
     let data: IPersonSharedData = {
-        personListRefresh: new BehaviorSubject<number>(1)
+        personListRefresh: new BehaviorSubject<number>(1),
+        personEditMode: new BehaviorSubject<any>(undefined),
     };
     return (
         <div className="App">

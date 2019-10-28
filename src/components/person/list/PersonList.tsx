@@ -25,6 +25,10 @@ export default class PersonList extends React.Component<PushesPropsType, {}> {
         await this.deletePerson(person);
     }
 
+    async editClicked(person: IPerson) {
+        this.props.data.personEditMode.next(person);
+    }
+
     renderForecastsTable(persons: any[]) {
         return (
             <div className="p-2">
@@ -38,9 +42,11 @@ export default class PersonList extends React.Component<PushesPropsType, {}> {
                     <Column field="addressTitle" title="Address Title"/>
                     <Column
                         field="addressTitle"
+                        width={150}
                         cell={props => (
                             <td>
-                                <button className="btn btn-sm btn-secondary" onClick={this.deleteClicked.bind(this, props.dataItem)}>Delete</button>
+                                <button className="btn btn-sm btn-secondary" onClick={this.editClicked.bind(this, props.dataItem)}>Edit</button>
+                                <button className="btn btn-sm btn-secondary ml-2" onClick={this.deleteClicked.bind(this, props.dataItem)}>Delete</button>
                             </td>
                         )}
                     />
