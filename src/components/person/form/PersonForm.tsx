@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Window} from '@progress/kendo-react-dialogs';
-import {IPersonSharedData} from '../IPersonSharedData';
+import {IPersonSharedData} from '../interfaces/IPersonSharedData';
 
 const txtFieldState = {value: '', valid: true, typeMismatch: false, errMsg: ''};
 const ErrorValidationLabel = ({txtLbl}: any) => (<label htmlFor="" style={{color: 'red'}}>{txtLbl}</label>);
@@ -50,7 +50,6 @@ export default class PersonForm extends React.Component<PushesPropsType, {}> {
     }
 
     toggleDialog() {
-        console.log(this.props);
         this.setState({
             visible: !this.state.visible
         });
@@ -65,7 +64,6 @@ export default class PersonForm extends React.Component<PushesPropsType, {}> {
         //note: put ajax calls here to persist the form inputs in the database.
         this.setState({...formValues, allFieldsValid}); //we set the state based on the extracted values from Constraint Validation API
 
-        console.log(formValues);
         if (allFieldsValid) {
             await this.savePerson(formValues);
         }
@@ -83,11 +81,9 @@ export default class PersonForm extends React.Component<PushesPropsType, {}> {
             })
         });
         if (res && res.statusText === 'OK') {
-            console.log('saved successfully');
             this.toggleDialog();
             this.props.data.personListRefresh.next(this.props.data.personListRefresh.value + 1);
         }
-        console.log(res);
     }
 
     render() {

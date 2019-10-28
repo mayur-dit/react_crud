@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Grid, GridColumn as Column} from '@progress/kendo-react-grid';
-import {IPersonSharedData} from '../IPersonSharedData';
+import {IPersonSharedData} from '../interfaces/IPersonSharedData';
+import {IPerson} from '../interfaces/IPerson';
 
 type PushesPropsType = { data: IPersonSharedData };
 export default class PersonList extends React.Component<PushesPropsType, {}> {
@@ -20,7 +21,11 @@ export default class PersonList extends React.Component<PushesPropsType, {}> {
         await this.loadPersonsData();
     }
 
-    static renderForecastsTable(persons: any[]) {
+    async deleteClicked(person: IPerson) {
+        await this.deletePerson(person);
+    }
+
+    renderForecastsTable(persons: any[]) {
         return (
             <div className="p-2">
                 <Grid
@@ -31,6 +36,14 @@ export default class PersonList extends React.Component<PushesPropsType, {}> {
                     <Column field="name" title="Name" width="250px"/>
                     <Column field="hobbies" title="Hobbies"/>
                     <Column field="addressTitle" title="Address Title"/>
+                    <Column
+                        field="addressTitle"
+                        cell={props => (
+                            <td>
+                                <button className="btn btn-sm btn-secondary" onClick={this.deleteClicked.bind(this, props.dataItem)}>Delete</button>
+                            </td>
+                        )}
+                    />
                 </Grid>
             </div>
         );
@@ -39,10 +52,20 @@ export default class PersonList extends React.Component<PushesPropsType, {}> {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : PersonList.renderForecastsTable(this.state.forecasts);
+            : this.renderForecastsTable(this.state.forecasts);
         return (
             <div>{contents}</div>
         );
+    }
+
+    async deletePerson(person: IPerson) {
+        let res = await fetch('http://localhost:8888/api/person/deleteperson?personId=' + person.personId, {
+            method: 'DELETE',
+            headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+        });
+        if (res && res.statusText === 'OK') {
+            this.props.data.personListRefresh.next(this.props.data.personListRefresh.value + 1);
+        }
     }
 
     async loadPersonsData() {

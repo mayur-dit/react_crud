@@ -3,7 +3,7 @@ import {BehaviorSubject} from 'rxjs';
 import './App.css';
 import PersonList from './components/person/list/PersonList';
 import PersonForm from './components/person/form/PersonForm';
-import {IPersonSharedData} from './components/person/IPersonSharedData';
+import {IPersonSharedData} from './components/person/interfaces/IPersonSharedData';
 
 const logo = require('./logo.svg');
 
