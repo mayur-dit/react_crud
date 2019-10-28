@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Grid, GridColumn as Column} from '@progress/kendo-react-grid';
 
 export default class PersonList extends React.Component {
     state = {
@@ -16,24 +17,14 @@ export default class PersonList extends React.Component {
 
     static renderForecastsTable(persons: any[]) {
         return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Hobbies</th>
-                    <th>Address Title</th>
-                </tr>
-                </thead>
-                <tbody>
-                {persons.map(person =>
-                    <tr key={person.personId}>
-                        <td>{person.name}</td>
-                        <td>{person.hobbies}</td>
-                        <td>{person.addressTitle}</td>
-                    </tr>
-                )}
-                </tbody>
-            </table>
+            <Grid
+                style={{height: '400px'}}
+                data={[...persons]}>
+                <Column field="personId" title="ID" width="40px"/>
+                <Column field="name" title="Name" width="250px"/>
+                <Column field="hobbies" title="Hobbies"/>
+                <Column field="addressTitle" title="Address Title"/>
+            </Grid>
         );
     }
 
