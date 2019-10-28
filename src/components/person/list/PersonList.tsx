@@ -17,14 +17,17 @@ export default class PersonList extends React.Component {
 
     static renderForecastsTable(persons: any[]) {
         return (
-            <Grid
-                style={{height: '400px'}}
-                data={[...persons]}>
-                <Column field="personId" title="ID" width="40px"/>
-                <Column field="name" title="Name" width="250px"/>
-                <Column field="hobbies" title="Hobbies"/>
-                <Column field="addressTitle" title="Address Title"/>
-            </Grid>
+            <div className="p-2">
+                <Grid
+                    className="table table-sm"
+                    style={{height: '400px'}}
+                    data={[...persons]}>
+                    <Column field="personId" title="ID" width="40px"/>
+                    <Column field="name" title="Name" width="250px"/>
+                    <Column field="hobbies" title="Hobbies"/>
+                    <Column field="addressTitle" title="Address Title"/>
+                </Grid>
+            </div>
         );
     }
 

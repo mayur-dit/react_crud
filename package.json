@@ -18,6 +18,7 @@
     "@progress/kendo-data-query": "^1.5.2",
     "@progress/kendo-drawing": "^1.6.0",
     "@progress/kendo-react-dateinputs": "^3.6.0",
+    "@progress/kendo-react-dialogs": "^3.6.0",
     "@progress/kendo-react-dropdowns": "^3.6.0",
     "@progress/kendo-react-grid": "^3.6.0",
     "@progress/kendo-react-inputs": "^3.6.0",
