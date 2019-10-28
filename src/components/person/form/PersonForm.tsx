@@ -143,7 +143,7 @@ export default class PersonForm extends React.Component<PushesPropsType, {}> {
 
         return (
             <div className="text-left m-2">
-                <button className="btn btn-primary" onClick={this.addPerson}>+ Person</button>
+                <button className="btn btn-primary" onClick={this.addPerson}><i className="fas fa-plus"></i> Person</button>
                 {this.state.visible &&
                 <Window title={'Person Form'} onClose={this.toggleDialog} initialHeight={450} initialWidth={500} initialTop={10}>
                     <form id="idForm" noValidate>
@@ -168,7 +168,7 @@ export default class PersonForm extends React.Component<PushesPropsType, {}> {
                             {renderAddressValidationError}
                         </div>
 
-                        <button type="button" onClick={this.submitForm} className="btn btn-primary">Submit</button>
+                        <button type="button" onClick={this.submitForm} className="btn btn-primary"><i className="fas fa-save"></i> Submit</button>
                     </form>
                 </Window>}
             </div>

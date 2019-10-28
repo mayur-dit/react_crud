@@ -34,7 +34,7 @@ export default class PersonList extends React.Component<PushesPropsType, {}> {
             <div className="p-2">
                 <Grid
                     className="table table-sm"
-                    style={{height: '400px'}}
+                    style={{height: '100%'}}
                     data={[...persons]}>
                     <Column field="personId" title="ID" width="40px"/>
                     <Column field="name" title="Name" width="250px"/>
@@ -42,11 +42,11 @@ export default class PersonList extends React.Component<PushesPropsType, {}> {
                     <Column field="addressTitle" title="Address Title"/>
                     <Column
                         field="addressTitle"
-                        width={150}
+                        width={180}
                         cell={props => (
                             <td>
-                                <button className="btn btn-sm btn-secondary" onClick={this.editClicked.bind(this, props.dataItem)}>Edit</button>
-                                <button className="btn btn-sm btn-secondary ml-2" onClick={this.deleteClicked.bind(this, props.dataItem)}>Delete</button>
+                                <button className="btn btn-sm btn-secondary" onClick={this.editClicked.bind(this, props.dataItem)}><i className="fas fa-edit"></i> Edit</button>
+                                <button className="btn btn-sm btn-secondary ml-2" onClick={this.deleteClicked.bind(this, props.dataItem)}><i className="fas fa-trash-alt"></i> Delete</button>
                             </td>
                         )}
                     />

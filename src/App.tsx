@@ -4,7 +4,6 @@ import './App.css';
 import PersonList from './components/person/list/PersonList';
 import PersonForm from './components/person/form/PersonForm';
 import {IPersonSharedData} from './components/person/interfaces/IPersonSharedData';
-import {IPerson} from './components/person/interfaces/IPerson';
 
 const logo = require('./logo.svg');
 
