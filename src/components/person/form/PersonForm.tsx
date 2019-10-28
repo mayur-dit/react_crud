@@ -15,7 +15,8 @@ export default class PersonForm extends React.Component<PushesPropsType, {}> {
         name: {...txtFieldState, fieldName: 'Name', required: true, requiredTxt: 'Name is required'},
         hobbies: {...txtFieldState, fieldName: 'hobbies', required: true, requiredTxt: 'Hobbies is required'},
         address: {...txtFieldState, fieldName: 'address', required: true, requiredTxt: 'Address is required'},
-        mode: 'add'
+        mode: 'add',
+        addressList: [],
     };
     editObj: IPerson;
 
@@ -31,6 +32,10 @@ export default class PersonForm extends React.Component<PushesPropsType, {}> {
             this.setState({mode: 'edit'});
             this.patchForm(person);
         });
+    }
+
+    async componentDidMount() {
+        await this.loadAddresses();
     }
 
     reduceFormValues = (formElements: any) => {
@@ -119,6 +124,12 @@ export default class PersonForm extends React.Component<PushesPropsType, {}> {
         }
     }
 
+    async loadAddresses() {
+        const response = await fetch('http://localhost:8888/api/person/getaddresses');
+        const data = await response.json();
+        this.setState({addressList: data});
+    }
+
     patchForm(person: IPerson) {
         this.editObj = person;
         this.state.name.value = person.name;
@@ -160,10 +171,11 @@ export default class PersonForm extends React.Component<PushesPropsType, {}> {
                         </div>
 
                         <div className="form-group">
-                            <label>Address</label>
+                            <label>City</label>
                             <select name="address" value={this.state.address.value} onChange={event => this.handleChange(event)} className="form-control" required>
-                                <option value={1}>USA</option>
-                                <option value={2}>India</option>
+                                {this.state.addressList.map((e: any, key: any) => {
+                                    return <option key={e.id} value={e.id}>{e.title}</option>;
+                                })}
                             </select>
                             {renderAddressValidationError}
                         </div>

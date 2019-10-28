@@ -39,7 +39,7 @@ export default class PersonList extends React.Component<PushesPropsType, {}> {
                     <Column field="personId" title="ID" width="40px"/>
                     <Column field="name" title="Name" width="250px"/>
                     <Column field="hobbies" title="Hobbies"/>
-                    <Column field="addressTitle" title="Address Title"/>
+                    <Column field="addressTitle" title="City"/>
                     <Column
                         field="addressTitle"
                         width={180}
